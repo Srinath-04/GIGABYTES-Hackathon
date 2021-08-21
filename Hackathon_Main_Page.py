@@ -105,6 +105,10 @@ def Main():
     Txt1,Txt1_img,Txt1_rect, Txt2,Txt2_img,Txt2_rect, Txt3,Txt3_img,Txt3_rect = Positions()
 
     while True:
+        for event in pygame.event.get(): # Handling user input
+            
+            if event.type == pygame.QUIT: # Handling User input to quit game
+                Close_Window('Quit')
 
         Display_imgs(Txt1_img, Txt1_rect, Txt2_img, Txt2_rect, Txt3_img, Txt3_rect)
 
@@ -121,10 +125,6 @@ def Main():
             Close_Window('')
             return Pass_on_message
 
-        for event in pygame.event.get(): # Handling user input
-            
-            if event.type == pygame.QUIT: # Handling User input to quit game
-                Close_Window('Quit')
 
 if __name__ == '__main__':
     print(Main())
