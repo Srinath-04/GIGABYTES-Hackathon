@@ -1,0 +1,18 @@
+whoami
+ls
+touch <File_Name.ext>
+
+git config --global user.name "<Insert User Name>"
+git config --global user.email "<Insert Email ID>"
+
+git config --global user.name ->Shows  user name
+git config --global user.email ->Shows emailid
+
+git status
+git add <File_Name.ext>
+git commit -m "<Message>"
+
+git remote set-url <Repository Name> <Insert_Link>
+git pull --rebase origin master
+git remote add <Repository Name> <Insert_Link>
+git remote -v
