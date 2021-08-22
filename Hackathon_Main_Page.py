@@ -55,6 +55,10 @@ def Positions():
     Pos_in_1 = (W2 ,H2)
     Pos_in_2 = (W2 + 100 ,H2 + Sep)
 
+    Welcome_Page = pygame.transform.scale(pygame.image.load('Assets\\Bg2.jpg').convert_alpha(),(Width,Height))
+    screen.blit(Welcome_Page, (0,0))
+    pygame.display.update()
+    pygame.time.delay(2000)
 
     Txt1 = 'I have academic issues'
     Txt1_img = Font2.render(Txt1, True , Black).convert_alpha()
