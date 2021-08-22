@@ -6,6 +6,8 @@ pygame.init()
 Width = 960
 Height = 540
 
+Match_Code = '12345678'
+
 def Load_Screen(Width,Height): #Loading the window
 
     screen = pygame.display.set_mode((Width,Height))
@@ -13,6 +15,8 @@ def Load_Screen(Width,Height): #Loading the window
 
 screen = Load_Screen(Width,Height)
 
+
+Font1 = pygame.font.Font('Assets\\Lilly\\Lilly__.ttf',15)
 Font2 = pygame.font.Font('Assets\\Lilly\\Lilly__.ttf',25)
 
 Bg = pygame.transform.scale(pygame.image.load('Assets\\Bg1.jpg').convert_alpha(),(Width,Height))
@@ -40,7 +44,7 @@ def Positions():
 
 
     Pos_in_1 = (W2 ,H2)
-    Pos_in_2 = (W2 ,H2 + Sep)
+    Pos_in_2 = (W2 + 100 ,H2 + Sep)
 
 
     Txt1 = 'I have academic issues'
@@ -97,7 +101,7 @@ def Display_imgs(Txt1_img,Txt1_rect, Txt2_img,Txt2_rect, Txt3_img,Txt3_rect, Txt
     #Input Text Preview
 
     Txt_in_2_img = Font2.render(Input_txt, True , Black).convert_alpha()
-    Txt_in_2_rect = Txt_in_2_img.get_rect(center = Pos_in_2)
+    Txt_in_2_rect = Txt_in_2_img.get_rect(midright = Pos_in_2)
     screen.blit(Txt_in_2_img, Txt_in_2_rect)
 
 def Check1(Click1,Txt1, Click2,Txt2, Click3,Txt3):
@@ -114,6 +118,23 @@ def Check1(Click1,Txt1, Click2,Txt2, Click3,Txt3):
     else:
         return 'No Value returned'
 
+def Check2(Code):
+    print(Match_Code)
+    if Code == Match_Code:
+        Match = True
+    
+    else:
+        Match = False
+        Pos = (4*Width/5, Height/25 + 100)
+        Txt_Error = 'Please enter a valid Passcode.'
+        Txt_Error_img = Font1.render(Txt_Error, True , Red).convert_alpha()
+        Txt_Error_rect = Txt_Error_img.get_rect(center = Pos)
+        screen.blit(Txt_Error_img, Txt_Error_rect)
+        pygame.display.update()
+        pygame.time.delay(1000)
+
+    return Match
+
 def Close_Window(Q):
     pygame.quit()
     if Q == 'Quit':
@@ -121,12 +142,14 @@ def Close_Window(Q):
 
 def Main():
 
-    Input_txt = 'Lol'
+    Input_txt = ''
 
     Txt1,Txt1_img,Txt1_rect, Txt2,Txt2_img,Txt2_rect, Txt3,Txt3_img,Txt3_rect ,Txt_in_1,Txt_in_1_img,Txt_in_1_rect, Pos_in_2 = Positions()
 
     while True:
-
+        
+        Display_imgs(Txt1_img, Txt1_rect, Txt2_img, Txt2_rect, Txt3_img, Txt3_rect, Txt_in_1_img, Txt_in_1_rect, Input_txt ,Pos_in_2)
+        
         for event in pygame.event.get(): # Handling user input
             
             if event.type == pygame.QUIT: # Handling User input to quit game
@@ -137,14 +160,14 @@ def Main():
                 if event.key == pygame.K_BACKSPACE:
 
                     Input_txt = Input_txt[0:len(Input_txt)-1]
-
+                    
                 elif event.key in (pygame.K_KP_ENTER , pygame.K_RETURN):
-                    pass
+                    Code = Input_txt
+                    print(Check2(Code))
 
                 else:
-                    Input_txt += event.unicode
-
-        Display_imgs(Txt1_img, Txt1_rect, Txt2_img, Txt2_rect, Txt3_img, Txt3_rect, Txt_in_1_img, Txt_in_1_rect, Input_txt ,Pos_in_2)
+                    if len(Input_txt)<=8:
+                        Input_txt += event.unicode
 
         Click1, Click2, Click3 = Mouse(Txt1_rect, Txt2_rect, Txt3_rect)
 
