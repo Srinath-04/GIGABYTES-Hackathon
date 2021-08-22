@@ -1,14 +1,22 @@
 import pygame
 import sys
+import csv
+from Four_Digit_OTP_Generator import OTP_Generator
+
+fh = open('Users.csv','r+')
 
 pygame.init()
 
 Width = 960
 Height = 540
 
-Match_Code = '12345678'
+Match_Code = []
 
-def Load_Screen(Width,Height): #Loading the window
+for line in csv.reader(fh):
+    if line != []:
+        Match_Code.append(line[0])
+
+def Load_Screen(Width,Height): #Loading the video
 
     screen = pygame.display.set_mode((Width,Height))
     return screen
@@ -120,7 +128,7 @@ def Check1(Click1,Txt1, Click2,Txt2, Click3,Txt3):
 
 def Check2(Code):
     print(Match_Code)
-    if Code == Match_Code:
+    if Code in Match_Code:
         Match = True
     
     else:
@@ -139,6 +147,14 @@ def Close_Window(Q):
     pygame.quit()
     if Q == 'Quit':
         sys.exit() #Safely exits the code
+
+def Generate_Pwd():
+
+    OTP = OTP_Generator()
+    if OTP in Match_Code:
+        Generate_Pwd()
+
+    return OTP
 
 def Main():
 
@@ -180,8 +196,11 @@ def Main():
         if Check_Str != 'No Value returned':
             Pass_on_message = Check_Str
             Close_Window('')
-            return Pass_on_message
-
+            fh.write('\n')
+            OTP = str(Generate_Pwd())
+            fh.write(OTP)
+            return Pass_on_message, OTP
 
 if __name__ == '__main__':
     print(Main())
+    fh.close()
