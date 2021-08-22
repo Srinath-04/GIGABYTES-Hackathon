@@ -1,7 +1,7 @@
 import pygame
 import sys
 import csv
-from Four_Digit_OTP_Generator import OTP_Generator
+from Eight_Digit_OTP_Generator import OTP_Generator
 
 fh = open('Users.csv','r+')
 
@@ -26,6 +26,7 @@ screen = Load_Screen(Width,Height)
 
 Font1 = pygame.font.Font('Assets\\Lilly\\Lilly__.ttf',15)
 Font2 = pygame.font.Font('Assets\\Lilly\\Lilly__.ttf',25)
+Font3 = pygame.font.Font('Assets\\Lilly\\Lilly__.ttf',20)
 
 Bg = pygame.transform.scale(pygame.image.load('Assets\\Bg1.jpg').convert_alpha(),(Width,Height))
 
@@ -54,6 +55,10 @@ def Positions():
     Pos_in_1 = (W2 ,H2)
     Pos_in_2 = (W2 + 100 ,H2 + Sep)
 
+    Welcome_Page = pygame.transform.scale(pygame.image.load('Assets\\Bg2.jpg').convert_alpha(),(Width,Height))
+    screen.blit(Welcome_Page, (0,0))
+    pygame.display.update()
+    pygame.time.delay(2000)
 
     Txt1 = 'I have academic issues'
     Txt1_img = Font2.render(Txt1, True , Black).convert_alpha()
@@ -89,6 +94,13 @@ def M_Fn(Txt_rect,Mouse_Pos,Click):
 
 def Mouse(Txt1_rect, Txt2_rect, Txt3_rect):
 
+    Txt_L = 'Login'
+    Txt_L_img = Font3.render(Txt_L, True , Blue).convert_alpha()
+    Txt_L_rect = Txt_L_img.get_rect(bottomleft = (Width-Txt_L_img.get_width()-20,Height-Txt_L_img.get_height()-20))
+
+    screen.blit(Txt_L_img, Txt_L_rect)
+    pygame.display.update()
+
     Mouse_Pos = pygame.mouse.get_pos()
     Click = pygame.mouse.get_pressed()[0]
 
@@ -96,7 +108,17 @@ def Mouse(Txt1_rect, Txt2_rect, Txt3_rect):
     Click2 = M_Fn(Txt2_rect,Mouse_Pos,Click)
     Click3 = M_Fn(Txt3_rect,Mouse_Pos,Click)
 
-    return Click1, Click2, Click3
+    Click_Login = M_Fn(Txt_L_rect, Mouse_Pos, Click)
+
+    if Click_Login:
+
+        Snath = True
+        '''print("Enter Srinath's code here")'''
+
+    else:
+        Snath = False
+
+    return Click1, Click2, Click3, Snath
 
 def Display_imgs(Txt1_img,Txt1_rect, Txt2_img,Txt2_rect, Txt3_img,Txt3_rect, Txt_in_1_img, Txt_in_1_rect, Input_txt ,Pos_in_2):
 
@@ -179,19 +201,24 @@ def Main():
                     
                 elif event.key in (pygame.K_KP_ENTER , pygame.K_RETURN):
                     Code = Input_txt
-                    print(Check2(Code))
+                    Match = Check2(Code)
+                    if Match:
+                        return '', int(Code), Snath, 'OTP_Run' #integration with Aadi's code 
 
                 else:
                     if len(Input_txt)<=8:
                         Input_txt += event.unicode
 
-        Click1, Click2, Click3 = Mouse(Txt1_rect, Txt2_rect, Txt3_rect)
+        Click1, Click2, Click3 ,Snath = Mouse(Txt1_rect, Txt2_rect, Txt3_rect)
 
         Check_Str = Check1(Click1, Txt1, Click2, Txt2, Click3, Txt3)
 
         pygame.display.update() # refreshes the contents of the screen
 
         pygame.time.Clock().tick(60)
+
+        if Snath == True:
+            return '', '', Snath, '' #integration with srinath's code
 
         if Check_Str != 'No Value returned':
             Pass_on_message = Check_Str
@@ -202,7 +229,7 @@ def Main():
             W = csv.writer(fh,lineterminator='')
             W.writerow([OTP, 'User'+str(len(Match_Code)+1)])
 
-            return Pass_on_message, OTP
+            return Pass_on_message, OTP, Snath, '' #New user
 
 if __name__ == '__main__':
     print(Main())
