@@ -9,8 +9,8 @@ tk.Label(win, text = "Select querry to reslove").place(x=140, y=10)
 i = 40
 List = ["alpha","beta","gamma","delta","epsilon"]
 
-''' Model file -
-
+'''
+Model file -
 Users.csv :
 
 [ "RndmPswd1" , "User1" , [ "text1" , "sender1" ] , [ "text2" , "sender2" ] , [ "text3" , "sender1" ] ]
@@ -18,35 +18,43 @@ Users.csv :
 [ "RndmPswd3" , "User3" , [ "text1" , "sender1" ] , [ "text2" , "sender2" ] , [ "text3" , "sender2" ] ]
 
 '''
-'''
 
 UsersList = []
-fh = open('Users.csv',r)
+fh = open('Users.csv','r+')
 re = csv.reader(fh)
 
 try:
-   for i in re:
-      j=i[-1]
-      if j[1] == i[1]:
-         UsersList += i[1]
+   
+   for a in re:
+      
+      #print(a)
+      b=eval(a[-1])
+      #print(b)
+      
+      if b[1] == a[1]:
+         UsersList.append([b[1],b[0]])
+         
 except:
    pass
-'''
 
+print(UsersList)
 bDict = {}
 
-#for k in UsersList:
-for k in List:
+for k in UsersList:
+#for k in List:
 
-   def move(x = k):
+   def move(x=k):
       
-      print(x)
+      print(k[0],k[1])
       
       win.destroy()
 
-   bDict[k] = tk.Button(win, text = k , width = 30, command = move, wraplength = 300)
-   bDict[k].place(x = 10, y = 20 + i)
+   #print(UsersList)
+   ntext = str(k[0]) + " : " + str(k[1])
+   #print(ntext)
+   
+   bDict[str(k[0])] = tk.Button(win, text = ntext , width = 30, command = move, wraplength = 300)
+   bDict[str(k[0])].place(x = 10, y = 20 + i)
    i += 30
 
 win.mainloop
-
