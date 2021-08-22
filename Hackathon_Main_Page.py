@@ -1,7 +1,7 @@
 import pygame
 import sys
 import csv
-from Four_Digit_OTP_Generator import OTP_Generator
+from Eight_Digit_OTP_Generator import OTP_Generator
 
 fh = open('Users.csv','r+')
 
