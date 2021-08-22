@@ -198,7 +198,10 @@ def Main():
             Close_Window('')
             fh.write('\n')
             OTP = str(Generate_Pwd())
-            fh.write(OTP)
+
+            W = csv.writer(fh,lineterminator='')
+            W.writerow([OTP, 'User'+str(len(Match_Code)+1)])
+
             return Pass_on_message, OTP
 
 if __name__ == '__main__':
