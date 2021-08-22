@@ -2,22 +2,11 @@ import tkinter as tk
 import csv 
 
 win = tk.Tk()
-win.geometry("400x400")
+win.geometry("960x540")
+win.configure(bg="light blue")
 
-tk.Label(win, text = "Select querry to reslove").place(x=140, y=10)
-
+tk.Label(win, text = "Select querry to reslove",font=("Consolas", 20) , background = "light blue", foreground = "magenta").place(x=300, y=10)
 i = 40
-List = ["alpha","beta","gamma","delta","epsilon"]
-
-'''
-Model file -
-Users.csv :
-
-[ "RndmPswd1" , "User1" , [ "text1" , "sender1" ] , [ "text2" , "sender2" ] , [ "text3" , "sender1" ] ]
-[ "RndmPswd2" , "User2" , [ "text1" , "sender1" ] , [ "text2" , "sender1" ] , [ "text3" , "sender2" ] ]
-[ "RndmPswd3" , "User3" , [ "text1" , "sender1" ] , [ "text2" , "sender2" ] , [ "text3" , "sender2" ] ]
-
-'''
 
 UsersList = []
 fh = open('Users.csv','r+')
@@ -27,12 +16,14 @@ try:
    
    for a in re:
       
-      #print(a)
+      print(a)
       b=eval(a[-1])
       #print(b)
-      
+      #print(b[1],a[1])
       if b[1] == a[1]:
-         UsersList.append([b[1],b[0]])
+         UsersList.append([b[1],b[0],a[0]])
+      else:
+         pass
          
 except:
    pass
@@ -43,9 +34,9 @@ bDict = {}
 for k in UsersList:
 #for k in List:
 
-   def move(x=k):
+   def move(x = k):
       
-      print(k[0],k[1])
+      print(x[0],x[2])
       
       win.destroy()
 
@@ -53,8 +44,8 @@ for k in UsersList:
    ntext = str(k[0]) + " : " + str(k[1])
    #print(ntext)
    
-   bDict[str(k[0])] = tk.Button(win, text = ntext , width = 30, command = move, wraplength = 300)
-   bDict[str(k[0])].place(x = 10, y = 20 + i)
+   bDict[k[0]] = tk.Button(win, text = ntext , width = 30, command = move)
+   bDict[k[0]].place(x = 10, y = 20 + i)
    i += 30
 
 win.mainloop
