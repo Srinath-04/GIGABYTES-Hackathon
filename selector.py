@@ -13,7 +13,6 @@ fh = open('Users.csv','r+')
 re = csv.reader(fh)
 
 try:
-   
    for a in re:
       
       print(a)
@@ -32,7 +31,6 @@ print(UsersList)
 bDict = {}
 
 for k in UsersList:
-#for k in List:
 
    def move(x = k):
       
