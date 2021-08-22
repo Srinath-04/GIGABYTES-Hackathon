@@ -6,7 +6,7 @@ win.geometry("960x540")
 win.configure(bg="light blue")
 
 tk.Label(win, text = "Select querry to reslove",font=("Consolas", 20) , background = "light blue", foreground = "magenta").place(x=300, y=10)
-i = 40
+i = 70
 
 UsersList = []
 fh = open('Users.csv','r+')
@@ -42,8 +42,8 @@ for k in UsersList:
    ntext = str(k[0]) + " : " + str(k[1])
    #print(ntext)
    
-   bDict[k[0]] = tk.Button(win, text = ntext , width = 30, command = move)
+   bDict[k[0]] = tk.Button(win, text = ntext , width = 50, command = move, anchor = 'w')
    bDict[k[0]].place(x = 10, y = 20 + i)
-   i += 30
+   i += 50
 
 win.mainloop
