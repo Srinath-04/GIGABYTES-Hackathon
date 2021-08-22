@@ -12,7 +12,7 @@ fh.close()
 '''
 fh = open('Users.csv','a+')
 wr = csv.writer(fh)
-wr.writerow(['password222','testuse223',['i am feeling bored','testuser222'],['Hobbies may help you!','couns'],['thanks','testuser223']])
+wr.writerow(['password222','testuser223',['i am feeling bored','testuser222'],['Hobbies may help you!','couns'],['thanks','testuser223']])
 fh.close()
 '''
 '''
